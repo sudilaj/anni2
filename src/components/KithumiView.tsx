@@ -146,7 +146,7 @@ export default function KithumiView() {
       {/* Background Music */}
       <audio 
         ref={audioRef}
-        src="https://drive.google.com/uc?export=download&id=1odI2YHFApN39L-jUjo2M1blQ_1TQKcyy" 
+        src="/background.mp3" 
         autoPlay 
         loop
       />
