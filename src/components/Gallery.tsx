@@ -94,6 +94,12 @@ export default function Gallery({ onBack }: GalleryProps) {
                   My sweetest girl,
                 </p>
                 <p>
+                  I know these past months have been very hard on us, but I'm soo proud of you and us for getting through everything. I know we still have a bunch of stuff to sort out together, and we will solve it all because I can't imagine going through this world without you as my one, my guiding light, my cheerleader.
+                </p>
+                <p>
+                  I love you and care about you my sweet angel, and I don't care how many times we argue or how many times you push me away, I'm never letting go. I love you soo much
+                </p>
+                <p>
                   I love you so much. Every single moment with you is a blessing. You are my sunshine, my endless happiness, and the absolute love of my life.
                 </p>
                 <p>
