@@ -4,6 +4,8 @@ import Game from './Game';
 import Gallery from './Gallery';
 import Chat from './Chat';
 import { MessageSquare, HelpCircle, ArrowLeft, Music, Music2, X } from 'lucide-react';
+import { db } from '../lib/firebase';
+import { doc, setDoc, increment, serverTimestamp } from 'firebase/firestore';
 
 export default function KithumiView() {
   const [currentView, setCurrentView] = useState<'main' | 'calendar' | 'game' | 'gallery'>('main');
@@ -11,6 +13,22 @@ export default function KithumiView() {
   const [showHintModal, setShowHintModal] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    // Record view analytics
+    const recordView = async () => {
+      try {
+        const statsRef = doc(db, 'analytics', 'views');
+        await setDoc(statsRef, {
+          kithumiOpens: increment(1),
+          lastOpened: serverTimestamp()
+        }, { merge: true });
+      } catch (e) {
+        console.error("Failed to record view:", e);
+      }
+    };
+    recordView();
+  }, []);
 
   useEffect(() => {
     const startAudio = () => {
