@@ -33,11 +33,17 @@ function generateExplosions() {
 export default function App() {
   const [userRole, setUserRole] = useState<'sudila' | 'kithumi' | null>(null);
   const [passwordInput, setPasswordInput] = useState('');
-  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [targetRole, setTargetRole] = useState<'sudila' | 'kithumi' | null>(null);
   const [explosions, setExplosions] = useState<any[]>([]);
 
   const handleSudilaClick = () => {
-    setShowPasswordPrompt(true);
+    setTargetRole('sudila');
+    setPasswordInput('');
+  };
+
+  const handleKithumiClick = () => {
+    setTargetRole('kithumi');
+    setPasswordInput('');
   };
 
   const handleHeartClick = () => {
@@ -47,9 +53,15 @@ export default function App() {
 
   const handlePasswordSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (passwordInput.toLowerCase() === 'floobs') {
+    if (targetRole === 'sudila' && passwordInput.toLowerCase() === 'floobs') {
       setUserRole('sudila');
-      setShowPasswordPrompt(false);
+      setTargetRole(null);
+    } else if (targetRole === 'kithumi' && passwordInput === 'Sushuswife') {
+      setUserRole('kithumi');
+      setTargetRole(null);
+    } else if (targetRole === 'kithumi' && passwordInput.toLowerCase() === 'sushuswife') { // just in case they don't capitalize
+      setUserRole('kithumi');
+      setTargetRole(null);
     } else {
       alert('Wrong password!');
     }
@@ -85,10 +97,10 @@ export default function App() {
         </div>
         <h1 className="text-3xl font-bold text-pink-600 font-serif">Who is visiting?</h1>
         
-        {!showPasswordPrompt ? (
+        {!targetRole ? (
           <div className="space-y-4">
             <button
-              onClick={() => setUserRole('kithumi')}
+               onClick={handleKithumiClick}
               className="w-full py-4 bg-pink-400 hover:bg-pink-500 text-white rounded-xl font-bold text-lg transition-colors shadow-md"
             >
               I am Kithumi 🌸
@@ -102,7 +114,9 @@ export default function App() {
           </div>
         ) : (
           <form onSubmit={handlePasswordSubmit} className="space-y-4">
-            <p className="text-gray-600 font-medium">Enter password for Sudila:</p>
+            <p className="text-gray-600 font-medium">
+              Enter password for {targetRole === 'sudila' ? 'Sudila' : 'Kithumi'}:
+            </p>
             <input
               type="password"
               value={passwordInput}
@@ -113,14 +127,14 @@ export default function App() {
             <div className="flex gap-2">
               <button
                 type="button"
-                onClick={() => setShowPasswordPrompt(false)}
+                onClick={() => setTargetRole(null)}
                 className="flex-1 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl font-bold transition-colors"
               >
                 Back
               </button>
               <button
                 type="submit"
-                className="flex-1 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-bold transition-colors"
+                className={`flex-1 py-3 text-white rounded-xl font-bold transition-colors ${targetRole === 'kithumi' ? 'bg-pink-500 hover:bg-pink-600' : 'bg-blue-500 hover:bg-blue-600'}`}
               >
                 Enter
               </button>
